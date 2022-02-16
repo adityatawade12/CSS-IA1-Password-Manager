@@ -1,6 +1,10 @@
 const { app, BrowserWindow, Menu } = require('electron')
 const log = require('electron-log')
 
+const mongo = require('mongodb').MongoClient
+const url = 'mongodb://localhost:27017'
+
+
 // Set env
 process.env.NODE_ENV = 'development'
 
@@ -51,3 +55,42 @@ app.on('activate', () => {
 })
 
 app.allowRendererProcessReuse = true
+
+ipcMain.on('getData',(e,options)=>{
+  
+  mongo.connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }, (err, client) => {
+  if (err) {
+    console.error(err)
+    return
+  }
+  const db = client.db('Password-Manager')
+const collection = db.collection('accounts')
+collection.find().toArray((err, items) => {
+  // console.log(items)
+ 
+  var catList={}
+  items.forEach(i=>{
+    
+    if(Object.keys(catList).includes(i.category)){
+      catList[i.category].push(i.username)
+    
+    }else{
+    
+      catList[i.category]=[i.username]
+    }
+
+    
+  })
+ 
+ 
+  mainWindow.webContents.send("catData",catList)
+  client.close()
+})
+
+  
+})
+
+ })
