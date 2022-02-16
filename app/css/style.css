@@ -6,3 +6,12 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.6;
 }
+
+.list{
+  margin-top: 10%;
+  width: 90%;
+}
+
+.pass{
+  margin-top: 10%;
+}
