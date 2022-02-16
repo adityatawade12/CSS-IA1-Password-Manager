@@ -94,3 +94,26 @@ collection.find().toArray((err, items) => {
 })
 
  })
+
+ ipcMain.on('getPass',(e,options)=>{
+  
+  mongo.connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }, (err, client) => {
+  if (err) {
+    console.error(err)
+    return
+  }
+  const db = client.db('Password-Manager')
+const collection = db.collection('accounts')
+collection.find({username: options.username,category:options.category}).toArray((err, items) => {
+  
+  mainWindow.webContents.send("passData",crypt.decrypt(items[0].password))
+  client.close()
+})
+
+  
+})
+
+ })
