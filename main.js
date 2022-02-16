@@ -164,3 +164,60 @@ collection.insertOne(obj, (err, result) => {
 })
        
  })
+
+
+ ipcMain.on('editPass',(e,options)=>{
+  console.log(options)
+  mongo.connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }, (err, client) => {
+  if (err) {
+    console.error(err)
+    return
+  }
+  const db = client.db('Password-Manager')
+const collection = db.collection('accounts')
+var obj={
+  username:options.username,
+  category:options.category,
+  password: crypt.encrypt(options.password)
+}
+collection.updateOne({username: options.username,category:options.category}, {'$set': {'password': crypt.encrypt(options.password)}}, (err, item) => {
+  console.log(item)
+  client.close()
+})
+
+  //...
+})
+       
+ })
+
+ 
+ ipcMain.on('delete:send',(e,options)=>{
+  console.log(options)
+  mongo.connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }, (err, client) => {
+  if (err) {
+    console.error(err)
+    return
+  }
+  const db = client.db('Password-Manager')
+const collection = db.collection('accounts')
+var obj={
+  username:options.username,
+  category:options.category,
+  password: crypt.encrypt(options.password)
+}
+collection.deleteOne({username: options.username,category:options.category}, (err, item) => {
+  console.log(item)
+  client.close()
+  mainWindow.webContents.send("delete:done")
+})
+
+  //...
+})
+       
+ })
