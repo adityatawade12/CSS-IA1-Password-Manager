@@ -1,6 +1,6 @@
 const { app, BrowserWindow, Menu } = require('electron')
 const log = require('electron-log')
-
+var CryptoJS = require("crypto-js");
 const mongo = require('mongodb').MongoClient
 const url = 'mongodb://localhost:27017'
 
@@ -117,3 +117,22 @@ collection.find({username: options.username,category:options.category}).toArray(
 })
 
  })
+
+ var crypt = {
+  
+  secret : "CIPHERKEY",
+ 
+  
+  encrypt : function (clear) {
+    var cipher = CryptoJS.AES.encrypt(clear, crypt.secret);
+    cipher = cipher.toString();
+    return cipher;
+  },
+ 
+  
+  decrypt : function (cipher) {
+    var decipher = CryptoJS.AES.decrypt(cipher, crypt.secret);
+    decipher = decipher.toString(CryptoJS.enc.Utf8);
+    return decipher;
+  }
+};
