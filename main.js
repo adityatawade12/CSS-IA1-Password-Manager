@@ -11,10 +11,10 @@ let mainWindow
 
 function createMainWindow() {
   mainWindow = new BrowserWindow({
-    title: 'APP NAME',
-    width: isDev ? 800 : 500,
+    title: 'Password Manager',
+    width: isDev ? 800 : 450,
     height: 600,
-    icon: './assets/icons/icon.png',
+    icon: `${__dirname}/assets/icons/icon.png`,
     resizable: isDev ? true : false,
     backgroundColor: 'white',
     webPreferences: {
@@ -26,7 +26,7 @@ function createMainWindow() {
     mainWindow.webContents.openDevTools()
   }
 
-  mainWindow.loadFile('./app/index.html')
+  mainWindow.loadFile('./app/add.html')
 }
 
 app.on('ready', () => {
@@ -36,25 +36,7 @@ app.on('ready', () => {
   Menu.setApplicationMenu(mainMenu)
 })
 
-const menu = [
-  ...(isMac ? [{ role: 'appMenu' }] : []),
-  {
-    role: 'fileMenu',
-  },
-  ...(isDev
-    ? [
-        {
-          label: 'Developer',
-          submenu: [
-            { role: 'reload' },
-            { role: 'forcereload' },
-            { type: 'separator' },
-            { role: 'toggledevtools' },
-          ],
-        },
-      ]
-    : []),
-]
+const menu=[]
 
 app.on('window-all-closed', () => {
   if (!isMac) {
