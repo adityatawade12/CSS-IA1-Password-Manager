@@ -136,3 +136,31 @@ collection.find({username: options.username,category:options.category}).toArray(
     return decipher;
   }
 };
+
+ipcMain.on('createNew',(e,options)=>{
+  console.log(options)
+  mongo.connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }, (err, client) => {
+  if (err) {
+    console.error(err)
+    return
+  }
+  const db = client.db('Password-Manager')
+const collection = db.collection('accounts')
+var obj={
+  username:options.username,
+  category:options.category,
+  password: crypt.encrypt(options.password)
+}
+collection.insertOne(obj, (err, result) => {
+  console.log(result)
+  mainWindow.webContents.send("update")
+  client.close()
+})
+// client.close()
+  //...
+})
+       
+ })
