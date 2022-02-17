@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu } = require('electron')
+const { app,ipcMain, BrowserWindow, Menu } = require('electron')
 const log = require('electron-log')
 var CryptoJS = require("crypto-js");
 const mongo = require('mongodb').MongoClient
@@ -17,7 +17,7 @@ function createMainWindow() {
   mainWindow = new BrowserWindow({
     title: 'Password Manager',
     width: isDev ? 800 : 450,
-    height: 600,
+    height: 620,
     icon: `${__dirname}/assets/icons/icon.png`,
     resizable: isDev ? true : false,
     backgroundColor: 'white',
@@ -37,7 +37,7 @@ app.on('ready', () => {
   createMainWindow()
 
   const mainMenu = Menu.buildFromTemplate(menu)
-  Menu.setApplicationMenu(mainMenu)
+  Menu.setApplicationMenu(null)
 })
 
 const menu=[]
@@ -57,6 +57,7 @@ app.on('activate', () => {
 app.allowRendererProcessReuse = true
 
 ipcMain.on('getData',(e,options)=>{
+  console.log("Hello")
   
   mongo.connect(url, {
     useNewUrlParser: true,

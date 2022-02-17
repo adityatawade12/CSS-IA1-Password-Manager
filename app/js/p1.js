@@ -1,6 +1,7 @@
 window.$ = window.jQuery = require('jquery');
 
-const { ipcRenderer, clipboard } = require('electron')
+const { ipcRenderer, clipboard } = require('electron');
+const { PasswordMeter } = require('password-meter');
 
 ipcRenderer.send('getData')
 
@@ -76,4 +77,62 @@ $("#copy").on("click", function () {
 	// console.log($("#password").val())
 	clipboard.writeText($("#password").val(), 'selection')
 	console.log(clipboard.readText('selection'))
+})
+
+$("#password2").on("input",function () {
+	console.log($("#password2").val())
+	
+	stren=new PasswordMeter({},{
+		"40": "Very Weak",  // 001 <= x <  040
+    "80": "Weak",  // 040 <= x <  080
+    "120": "Medium", // 080 <= x <  120
+    "_": "Strong" // 120 <= x <  180
+   
+	}).getResult($("#password2").val()).status
+	if($("#password2").val().length!=0){
+		$("#passStrength").text(`Your password strength is ${stren}`)
+		if(stren=="Very Weak" || stren=="Weak"){
+			$("#passStrength").css({"color":"red"})
+		}else if(stren=="Medium"){
+			$("#passStrength").css({"color":"orange"})
+
+		}else{
+			$("#passStrength").css({"color":"green"})
+
+		}
+	}else{
+
+		$("#passStrength").text("a")
+		$("#passStrength").css({"color":"white"})
+	}
+	
+})
+
+$("#password3").on("change input",function () {
+	console.log($("#password3").val())
+	
+	stren=new PasswordMeter({},{
+		"40": "Very Weak",  // 001 <= x <  040
+    "80": "Weak",  // 040 <= x <  080
+    "120": "Medium", // 080 <= x <  120
+    "_": "Strong" // 120 <= x <  180
+   
+	}).getResult($("#password3").val()).status
+	if($("#password3").val().length!=0){
+		$("#passStrength2").text(`Your password strength is ${stren}`)
+		if(stren=="Very Weak" || stren=="Weak"){
+			$("#passStrength2").css({"color":"red"})
+		}else if(stren=="Medium"){
+			$("#passStrength2").css({"color":"orange"})
+
+		}else{
+			$("#passStrength2").css({"color":"green"})
+
+		}
+	}else{
+
+		$("#passStrength2").text("a")
+		$("#passStrength2").css({"color":"white"})
+	}
+	
 })

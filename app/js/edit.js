@@ -7,6 +7,9 @@ $("#categories1").on("change",function(){
         $('#accounts1').append(new Option(acc, acc));
     })
     $("#password3").val("")
+    $("#getPass1").attr("disabled",true)
+    $("#save4").attr("disabled",true)
+    $("#delete").attr("disabled",true)
 })
 
 $("#show3").on("click",function(){
@@ -22,6 +25,8 @@ $("#show3").on("click",function(){
 $("#accounts1").on("change",function(){
     $("#password3").val("")
     $("#getPass1").attr("disabled",false)
+    $("#save4").attr("disabled",true)
+    $("#delete").attr("disabled",true)
    
 })
 $("#getPass1").on("click",function(){
@@ -75,6 +80,10 @@ function clearAll(){
     $("#show").attr("disabled",true)
     $("#copy").attr("disabled",true)
     $("#accounts").attr("disabled",true)
+    $("#passStrength2").text("a")
+		$("#passStrength2").css({"color":"white"})
+        $("#passStrength").text("a")
+		$("#passStrength").css({"color":"white"})
 }
 
 $(".cl").on('click',function(){
