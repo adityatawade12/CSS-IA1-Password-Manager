@@ -10,6 +10,8 @@ $("#categories1").on("change",function(){
     $("#getPass1").attr("disabled",true)
     $("#save4").attr("disabled",true)
     $("#delete").attr("disabled",true)
+    $("#leak").attr("disabled",true)
+
 })
 
 $("#show3").on("click",function(){
@@ -27,6 +29,8 @@ $("#accounts1").on("change",function(){
     $("#getPass1").attr("disabled",false)
     $("#save4").attr("disabled",true)
     $("#delete").attr("disabled",true)
+    $("#leak").attr("disabled",true)
+
    
 })
 $("#getPass1").on("click",function(){
@@ -35,6 +39,8 @@ $("#getPass1").on("click",function(){
     $("#delete").attr("disabled",false)
     $("#show3").attr("disabled",false)
     $("#password3").attr("disabled",false)
+    $("#leak").attr("disabled",false)
+
 })
 
 $("#save4").on('click',function(){
@@ -84,8 +90,34 @@ function clearAll(){
 		$("#passStrength2").css({"color":"white"})
         $("#passStrength").text("a")
 		$("#passStrength").css({"color":"white"})
+    $("#leak").attr("disabled",true)
+
 }
 
 $(".cl").on('click',function(){
     clearAll()
 })
+
+
+
+
+
+$("#leak").on("click",function(){
+    console.log($("#password3").val())
+    shpass=$("#password3").val()
+    ur=`https://leakedpassword.com/api/?p=${shpass}`
+    console.log(ur)
+    $.getJSON(ur, function(data) {
+        console.log(data);
+        stat=data.password.leak
+        if(stat){
+            $("#passStrength2").text(`Is password leaked: False`)
+        $("#passStrength2").css({"color":"red"})
+        }else{
+            $("#passStrength2").text(`Is password leaked: True`)
+        $("#passStrength2").css({"color":"green"})
+        }
+        
+    });
+});
+

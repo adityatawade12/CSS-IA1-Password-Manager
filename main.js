@@ -16,7 +16,7 @@ let mainWindow
 function createMainWindow() {
   mainWindow = new BrowserWindow({
     title: 'Password Manager',
-    width: isDev ? 800 : 450,
+    width: isDev ? 810 : 450,
     height: 620,
     icon: `${__dirname}/assets/icons/icon.png`,
     resizable: isDev ? true : false,
@@ -57,7 +57,7 @@ app.on('activate', () => {
 app.allowRendererProcessReuse = true
 
 ipcMain.on('getData',(e,options)=>{
-  console.log("Hello")
+  
   
   mongo.connect(url, {
     useNewUrlParser: true,
