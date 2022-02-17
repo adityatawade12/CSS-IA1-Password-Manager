@@ -111,10 +111,10 @@ $("#leak").on("click",function(){
         console.log(data);
         stat=data.password.leak
         if(stat){
-            $("#passStrength2").text(`Is password leaked: False`)
+            $("#passStrength2").text(`Is password leaked: True`)
         $("#passStrength2").css({"color":"red"})
         }else{
-            $("#passStrength2").text(`Is password leaked: True`)
+            $("#passStrength2").text(`Is password leaked: False`)
         $("#passStrength2").css({"color":"green"})
         }
         
